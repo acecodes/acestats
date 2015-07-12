@@ -33,6 +33,19 @@ class Stats:
             high = midpoint
             return (sorted_distribution[low] + sorted_distribution[high]) / 2
 
+    @staticmethod
+    def quantile(distribution, p):
+        """Return the pth-percentile value in distribution"""
+        p_index = int(p * len(distribution))
+        return sorted(distribution)[p_index]
+
+    @staticmethod
+    def mode(distribution):
+        """Return most common value(s) in distribution"""
+        counts = Counter(distribution)
+        max_count = max(counts.values())
+        return [x_i for x_i, count in counts.iteritems() if count == max_count]
+
 
 def friends_histogram():
     """Display a frequency distribution within a histogram"""
@@ -50,6 +63,8 @@ def friends_histogram():
     plt.show()
 
 if __name__ == '__main__':
-    sample_distribution = [1, 5, 29, 321, 12, 125, 99, 72]
+    sample_distribution = [1, 5, 29, 321, 5, 12, 125, 99, 72, 1]
     print(Stats.mean(sample_distribution))
     print(Stats.median(sample_distribution))
+    print(Stats.mode(sample_distribution))
+    print(Stats.quantile(sample_distribution, 0.2))
