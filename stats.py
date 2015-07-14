@@ -2,6 +2,7 @@
 Some code borrowed from Data Science From Scratch (Grus)
 """
 import matplotlib.pyplot as plt
+import math
 from collections import Counter
 
 
@@ -46,6 +47,49 @@ class Stats:
         max_count = max(counts.values())
         return [x_i for x_i, count in counts.iteritems() if count == max_count]
 
+    @staticmethod
+    def data_range(distribution):
+        """Return range of distribution"""
+        return max(distribution) - min(distribution)
+
+    @staticmethod
+    def variance(distribution):
+        """Calculates the variance of a distribution"""
+        def de_mean(distribution):
+            x_bar = Stats.mean(distribution)
+            return [x_i - x_bar for x_i in distribution]
+
+        n = len(distribution)
+        deviations = de_mean(distribution)
+        return Vector.sum_of_squares(deviations) / (n-1)
+
+    @staticmethod
+    def standard_deviation(distribution):
+        """Standard deviation of a distribution"""
+        return math.sqrt(Stats.variance(distribution))
+
+    @staticmethod
+    def interquartile_range(distribution):
+        """Handles outliers better"""
+        return Stats.quantile(distribution, 0.75) - Stats.quantile(distribution, 0.25)
+
+
+class Vector:
+    """
+    Vector operations
+    Borrowed from my linear algebra repo
+    """
+
+    @staticmethod
+    def dot_product(v, w):
+        """Sum of componentwise products"""
+        return (sum(v_i * w_i for v_i, w_i in zip(v, w)))
+
+    @staticmethod
+    def sum_of_squares(v):
+        """v_1 * v_1 + ... v_n * v_n"""
+        return Vector.dot_product(v, v)
+
 
 def friends_histogram():
     """Display a frequency distribution within a histogram"""
@@ -63,8 +107,12 @@ def friends_histogram():
     plt.show()
 
 if __name__ == '__main__':
-    sample_distribution = [1, 5, 29, 321, 5, 12, 125, 99, 72, 1]
-    print(Stats.mean(sample_distribution))
-    print(Stats.median(sample_distribution))
-    print(Stats.mode(sample_distribution))
-    print(Stats.quantile(sample_distribution, 0.2))
+    sample_distribution = [92, 5, 29, 200, 5, 12, 125, 99, 72, 2]
+    print('Sample distribution: {}'.format(sample_distribution))
+    print('Mean: {}'.format(Stats.mean(sample_distribution)))
+    print('Median: {}'.format(Stats.median(sample_distribution)))
+    print('Mode: {}'.format(Stats.mode(sample_distribution)))
+    print('Quantile: {}'.format(Stats.quantile(sample_distribution, 0.2)))
+    print('Range: {}'.format(Stats.data_range(sample_distribution)))
+    print('Standard deviation: {}'.format(Stats.standard_deviation(sample_distribution)))
+    print('Interquartile range: {}'.format(Stats.interquartile_range(sample_distribution)))
