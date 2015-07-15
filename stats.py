@@ -53,14 +53,17 @@ class Stats:
         return max(distribution) - min(distribution)
 
     @staticmethod
+    def de_mean(distribution):
+        """Translate distribution by subtracting its mean (mean == 0)"""
+        x_bar = Stats.mean(distribution)
+        return [x_i - x_bar for x_i in distribution]
+
+    @staticmethod
     def variance(distribution):
         """Calculates the variance of a distribution"""
-        def de_mean(distribution):
-            x_bar = Stats.mean(distribution)
-            return [x_i - x_bar for x_i in distribution]
 
         n = len(distribution)
-        deviations = de_mean(distribution)
+        deviations = Stats.de_mean(distribution)
         return Vector.sum_of_squares(deviations) / (n-1)
 
     @staticmethod
@@ -72,6 +75,22 @@ class Stats:
     def interquartile_range(distribution):
         """Handles outliers better"""
         return Stats.quantile(distribution, 0.75) - Stats.quantile(distribution, 0.25)
+
+    @staticmethod
+    def covariance(variable1, variable2):
+        """Measures how two variables vary in tandem from their means"""
+        n = len(variable1)
+        return Vector.dot_product(Stats.de_mean(variable1), Stats.de_mean(variable2) / (n - 1))
+
+    @staticmethod
+    def correlation(variable1, variable2):
+        """Check correlation between two variables"""
+        stdev_1 = Stats.standard_deviation(variable1)
+        stdev_2 = Stats.standard_deviation(variable2)
+        if stdev_1 > 0 and stdev_2 > 0:
+            return Stats.covariance(variable1, variable2) / stdev_1 / stdev_2
+        else:
+            return 0  # If there isn't any variation, correlation is zero
 
 
 class Vector:
