@@ -3,13 +3,15 @@ Some code borrowed from Data Science From Scratch (Grus)
 """
 import matplotlib.pyplot as plt
 import math
+import random
 from collections import Counter
 
 
 class Stats:
+
     """
     Commonly used statistical methods
-    All functions are staticmethods
+    All functions are static methods
     """
 
     @staticmethod
@@ -64,7 +66,7 @@ class Stats:
 
         n = len(distribution)
         deviations = Stats.de_mean(distribution)
-        return Vector.sum_of_squares(deviations) / (n-1)
+        return Vector.sum_of_squares(deviations) / (n - 1)
 
     @staticmethod
     def standard_deviation(distribution):
@@ -93,7 +95,43 @@ class Stats:
             return 0  # If there isn't any variation, correlation is zero
 
 
+class Probability:
+
+    """
+    Code related to probability
+    All functions are static methods
+    """
+
+    @staticmethod
+    def independent_events():
+        """
+        Demonstration of independent events
+        """
+        def random_child():
+            return random.choice(['boy', 'girl'])
+
+        both_girls = 0
+        older_girl = 0
+        either_girl = 0
+
+        younger = random_child()
+        older = random_child()
+        if older == 'girl':
+            older_girl += 1
+        if older == 'girl' and younger == 'girl':
+            both_girls += 1
+        if older == 'girl' or younger == 'girl':
+            either_girl += 1
+
+        result = [x for x in [
+            {'both_girls': both_girls,
+             'older_girl': older_girl,
+             'either_girl': either_girl}]]
+        return result
+
+
 class Vector:
+
     """
     Vector operations
     Borrowed from my linear algebra repo
@@ -135,3 +173,4 @@ if __name__ == '__main__':
     print('Range: {}'.format(Stats.data_range(sample_distribution)))
     print('Standard deviation: {}'.format(Stats.standard_deviation(sample_distribution)))
     print('Interquartile range: {}'.format(Stats.interquartile_range(sample_distribution)))
+    print('Independent events: {}'.format(Probability.independent_events()))
