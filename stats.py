@@ -1,4 +1,5 @@
 """
+Statistics & Probability
 Some code borrowed from Data Science From Scratch (Grus)
 """
 import matplotlib.pyplot as plt
@@ -128,6 +129,28 @@ class Probability:
              'older_girl': older_girl,
              'either_girl': either_girl}]]
         return result
+
+    @staticmethod
+    def uniform_pdf(distribution):
+        """
+        Probability density function
+        of a uniform distribution
+        """
+        return 1 if distribution >= 0 and distribution < 1 else 0
+
+    @staticmethod
+    def uniform_cdf(distribution):
+        """
+        Cumulative density function of
+        a uniform distribution
+        """
+        if distribution < 0:
+            return 0
+        elif distribution < 1:
+            return distribution
+        else:
+            return 1
+
 
 
 class Vector:
