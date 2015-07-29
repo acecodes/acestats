@@ -151,6 +151,11 @@ class Probability:
         else:
             return 1
 
+    @staticmethod
+    def normal_pdf(x, mu=0, sigma=1):
+        """Normal distribution function"""
+        sqrt_two_pi = math.sqrt(2 * math.pi)
+        return (math.exp(-(x - mu) ** 2 / 2 / sigma ** 2) / (sqrt_two_pi * sigma))
 
 
 class Vector:
@@ -194,6 +199,8 @@ if __name__ == '__main__':
     print('Mode: {}'.format(Stats.mode(sample_distribution)))
     print('Quantile: {}'.format(Stats.quantile(sample_distribution, 0.2)))
     print('Range: {}'.format(Stats.data_range(sample_distribution)))
-    print('Standard deviation: {}'.format(Stats.standard_deviation(sample_distribution)))
-    print('Interquartile range: {}'.format(Stats.interquartile_range(sample_distribution)))
+    print('Standard deviation: {}'.format(
+        Stats.standard_deviation(sample_distribution)))
+    print('Interquartile range: {}'.format(
+        Stats.interquartile_range(sample_distribution)))
     print('Independent events: {}'.format(Probability.independent_events()))
