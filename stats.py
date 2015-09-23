@@ -157,6 +157,16 @@ class Probability:
         sqrt_two_pi = math.sqrt(2 * math.pi)
         return (math.exp(-(x - mu) ** 2 / 2 / sigma ** 2) / (sqrt_two_pi * sigma))
 
+    @staticmethod
+    def bernoulli_trial(p):
+        """Perform a Bernoulli trial (random 1/0)"""
+        return 1 if random.random() < p else 0
+
+    @staticmethod
+    def binomial(n, p):
+        """Sum of Bernoulli random variables"""
+        return sum(Probability.bernoulli_trial(p) for _ in range(n))
+
 
 class Vector:
 
