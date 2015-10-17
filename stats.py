@@ -167,6 +167,18 @@ class Probability:
         """Sum of Bernoulli random variables"""
         return sum(Probability.bernoulli_trial(p) for _ in range(n))
 
+    @staticmethod
+    def B(alpha, beta):
+        """Normalizing constant to ensure the total probability is 1"""
+        return math.gamma(alpha) * math.gamma(beta) / math.gamma(alpha + beta)
+
+    @staticmethod
+    def beta_pdf(x, alpha, beta):
+        """Create a beta probability distribution (all values between 1 and 0)"""
+        if x < 0 or x > 1:
+            return 0
+        return x ** (alpha - 1) * (1 - x) ** (beta - 1) / Probability.B(alpha, beta)
+
 
 class Vector:
 
